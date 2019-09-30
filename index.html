@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <style type="text/css">
+    
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        html{
+            height:100%;
+            width:100%;
+            overflow: hidden;
+            
+        }
+        html::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            -webkit-filter: blur(20px);
+            filter: blur(30px);
+            background:#1B1E21 url('claw.png') no-repeat center
+        }
+
+        body {
+            height:100%;
+            width:100%;
+            margin:0;
+            border: 0;
+        }
+
+        #navigation {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            -webkit-app-region: drag;
+            max-height: 10%;
+            min-height: 7%;
+            width: 100%;
+            color: #B44335  ;
+            font-size: 40px;            
+            -webkit-user-select:none;
+            line-height: 60px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-shadow: 1px 1px 1px  #B44335 ,-2px -2px 2px black  ;
+            outline: 10px;
+            box-shadow: 1px -1px 10px black;
+        }
+        #logo {
+          max-height: 45px;
+          margin-top:8px;
+          margin-left:10px;
+        }
+        input {
+            border: 0;
+            background-color : transparent;
+            border-bottom: #D5EFF3 1px solid;
+            text-shadow: 1px 1px 5px black;
+            -webkit-user-select:none;
+
+            color: #B5D8F6;
+            height: 25px;
+            width: 130px;
+            font-size: 15px;
+            margin:5px;
+            outline:medium;
+        }
+        input:focus{ border-bottom:1px solid #B44335; }
+        .butn{
+            border: 0;
+            background-color : transparent;
+            color: #B2B2B2;
+            height: 25px;
+            width: 15px;
+            font-size: 18px;
+            margin:10px;
+            outline:medium;
+
+            text-shadow: 1px 1px 5px black;
+            box-shadow: 1px 1px 5px #D5EFF3;
+            border-radius: 100px;
+            align-self: stretch;
+        }
+        .butn:focus {border-bottom: none;}
+        .butn:hover { color: #B44335; text-shadow: 2px 2px 5px black; box-shadow: 1px 1px 6px #D5EFF3;}
+        .butn:active { color: #B2B2B2; text-shadow: 1px 1px 1px black;box-shadow: 1px 1px 3px #D5EFF3;}
+        .tasks
+        {
+            
+            min-width: 30px;
+            min-height: 30px;
+            color: #B5D8F6;
+            text-align: center;
+            background-color: #1B1E21;
+            display: inline-block;
+        }
+
+        .info-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            min-height: 30%;
+
+            overflow: scroll;
+            margin: 5px;
+            margin-bottom: 30px;
+            margin-left: 12px;
+
+            }
+        .main-row-container{
+
+            max-width: 99%;
+            min-height: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            border: 1px #414141;
+        }
+        .main-column-container{
+            min-width: 50%;
+            min-height: 90%;
+            max-width: 50%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow: auto;
+
+            flex-wrap: nowrap;
+
+        }
+
+        .task{
+            min-width: 98%;
+            min-height: 5%;
+            max-width: 98%;
+            max-height: 5%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+
+            color: #B2B2B2;
+            text-shadow: 1px 1px 5px black;
+            user-select: none;
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .task:hover{color: #B44335; margin: 2px; transition: opacity 1s;}
+        .task-clicked{
+            min-width: 98%;
+            min-height: 5%;
+            max-width: 98%;
+            max-height: 8%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+
+            text-shadow: 1px 1px 5px black;
+            user-select: none;
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #B44335; border: .5px solid #B44335 ; box-shadow: 1px 1px 5px #B44335 ; margin: 2px;
+        }
+        a[name="id"]{
+            flex: 0 0 58px;
+            text-overflow: ellipsis;
+            margin: auto;
+        }
+        a[name="status"]{
+            flex: 0 0 174px;
+            text-align: center;
+            text-overflow: ellipsis;
+            margin: auto;
+        }
+        a[name="product"]{
+            flex: 0 0 251px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: auto;
+        }
+        .status {
+            min-width: 98%;
+            min-height: 5%;
+            max-width: 98%;
+            max-height: 5%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            position: fixed;
+
+            color: #B2B2B2;
+            text-shadow: 1px 1px 5px black;
+            user-select: none;
+
+        }
+        .status > a {
+            text-align: center;
+            margin: auto;
+        }
+        .proxy{
+            display: none;
+        }
+        .control-button{
+            min-width: 96%;
+            min-height: 30%;
+            max-width: 96%;
+            max-height: 30%;
+            margin: 5px;
+            margin-bottom: 0px;
+            margin-left: 12px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            overflow: auto;
+            flex-wrap: wrap;
+        }
+        .Input {
+            position: relative;
+        }
+        .Input-label {
+            display: block;
+            position: absolute;
+            opacity: 0;
+        }
+        .Input-text:placeholder-shown + .Input-label {
+            
+            cursor: text;
+  max-width: 66.66%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left bottom;
+  transform: translate(0, 2.125rem) scale(1.5);
+        }
+        .Input-text:not(:placeholder-shown) + .Input-label,
+        .Input-text:focus:not(:placeholder-shown) + .Input-label {
+            visibility: visible;
+            z-index: 1;
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+  cursor: pointer;
+        }
+
+
+
+    </style>
+    <script type="text/javascript">
+        var path = require('path')
+        window.$ = window.jQuery = require(path.join(__dirname,'jquery-3.4.1.min.js'));
+        var remote=require('electron').remote
+        const {BrowserView,BrowserWindow, session} = remote;
+
+        var focusTask = null;
+        var allT;
+        function stop(){
+            alert(123);
+        }
+        function quit() {
+            saveTasks()
+            window.close()
+        }
+        function startAll(){
+            allT = document.getElementById('tasks').children
+            for (let i=0; i<allT.length; i++) {
+                if (allT[i].children[1].text == "IDLE")
+                    supreme.emit("ready", allT[i].id)
+                
+            }
+         } 
+        function endALL() {
+            allT = document.getElementById('tasks').children
+            for (let i=0; i<allT.length; i++) {
+                if (allT[i].children[1].text != "IDLE")
+                    supreme.emit("stop", allT[i].id)
+            }
+        }
+        function eleminateAll() {
+            allT = document.getElementById('tasks').children
+            for (let i= allT.length-1; i>=0 ; i--) {
+                supreme.emit("delete_task", allT[i].id)
+            }
+        }
+        function loadInfo(name, value){
+            let elem;
+            if (name == null)
+             return
+            if ((elem = document.getElementById(name)) == null) {
+                return;
+            } else {
+                elem.value=value
+            }
+        }
+        function clearInfo(){
+            let allInput = document.getElementsByTagName("Input");
+            for (let elem in allInput){
+                if (allInput[elem].type != "submit")
+                    allInput[elem].value = "";
+            }
+        }
+        
+        function selected(elem){
+            if (elem.classList.contains("task-clicked")){
+                focusTask = null;
+                elem.setAttribute("class", "task")
+                clearInfo();
+            } else{
+                if (focusTask != null){
+                    focusTask.setAttribute("class", "task");
+                }
+                focusTask = elem;
+                elem.setAttribute("class", "task-clicked");
+                let info = supreme.tasks[elem.children[0].innerText];
+                for (let key in info.task){
+                    console.log(key,info.task[key])
+                    loadInfo(key, info.task[key])
+
+                }
+                for (let key in info.person){
+                    console.log(key,info.person[key])
+                    loadInfo(key, info.person[key])
+                }
+            }
+        }
+        function view () {
+            let view = new BrowserView({show:false})
+                remote.getCurrentWindow().setBrowserView(view)
+                view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
+                view.webContents.loadURL('https://www.supremenewyork.com/cart')
+            }
+        let glass = true
+        function setBackground() {
+            $("html").css("background-color",'#'+(Math.random()*0xffffff<<0).toString(16));
+        }
+
+        function loadT(event) {
+            event.preventDefault();
+            var id=event.dataTransfer.getData("Text");
+            let info = supreme.tasks[id];
+            for (let key in info.task){
+                console.log(key,info.task[key])
+                loadInfo(key, info.task[key])
+            }
+        }
+        function loadP(event) {
+            event.preventDefault();
+            var id=event.dataTransfer.getData("Text");
+            let info = supreme.tasks[id];
+            for (let key in info.person){
+                console.log(key,info.person[key])
+                loadInfo(key, info.person[key])
+
+                }
+        }
+        function preventDefaultAction(ev) {
+            ev.preventDefault();
+        }
+        $().ready(()=>{
+            
+        });
+        
+    </script>
+    <script src="./index.js"></script>
+</head>
+<body >
+    <div id = "navigation">
+        <img id="logo" src="./claw.png" onclick="quit()">
+        <a onclick="startAll()">X</a>
+        <a onclick="endALL()">e</a>
+        <a onclick="eleminateAll()">e</a>
+        <a onclick="openCaptchaWindow()">R</a>
+        <a onclick="setBackground()">E</a>
+        <a onclick="supreme.emit('monitor_on', 2000)" oncontextmenu="supreme.emit('monitor_off')">®</a>
+        <span id="datetime"></span>
+    </div>
+    <div class="main-row-container">
+        <div class="main-column-container">
+            <div id="canv" style="text-align: center;">
+            <form id="task_info" class="info-container" ondrop="loadT(event)" ondragover="preventDefaultAction(event)">
+                <input id="category" type="" name="category" placeholder="Category">
+                <input id="color" type="" name="color" placeholder="Color">
+                <input id="size" type="" name="size" placeholder="Size">
+                <input id="keywords" type="" name="keywords" placeholder="Keywords">
+                <input id="type" type="" name="type" placeholder="Type">
+                <input id="delay" type="" name="delay" placeholder="Delay">
+                
+            </form>
+             <form id="person_info" class="info-container" ondrop="loadP(event)" ondragover="preventDefaultAction(event)">
+                <input id="email" type="" name="email" placeholder="Email">
+                <input id="first_name" type="" name="first_name" placeholder="First Name">
+                <input id="last_name" type="" name="last_name" placeholder="Last Name">
+                <input id="addr" type="" name="addr" placeholder="Address">
+                <input id="apt" type="" name="apt" placeholder="apt#">
+                <input id="country" type="" name="country" placeholder="Country">
+                <input id="city" type="" name="city" placeholder="City">
+                <input id="state" type="" name="state" placeholder="State">
+                <input id="zipcode" type="" name="zipcode" placeholder="Zip Code">
+                <input id="phone" type="" name="phone" placeholder="Phone">
+                <input id="cn" type="" name="cn" placeholder="Card Number">
+                <input id="ch" type="" name="ch" placeholder="Card Holder">
+                <input id="cmy"" type="" name="cmy" placeholder="MM/YY">
+                <input id="cvv" type="" name="cvv" placeholder="CVV">
+             </form>
+
+        </div>
+
+            <div class="control-button">
+                <input id="sub" class = "butn" type="submit" value="Add" onclick="createTask()" style="width: 38%; margin-bottom: 0; align-self: center;" /> 
+                <input id="update" class = "butn" type="submit" value="Update" onclick="updateTask()" style="width: 38%; margin-bottom: 0; align-self: center;" /> 
+
+                <input id="Proxy" class = "butn" type="submit" value="Proxy" onclick="change()" style="width: 38%; margin-bottom: 0; align-self: center;" /> 
+                <input id="Profile" class = "butn" type="submit" value="Profile" onclick="view()" style="width: 38%; margin-bottom: 0; align-self: center;" />      
+            </div>      
+            </div> 
+             <div class="main-column-container" style="overflow: visible;">
+                <div id = "statusBar"class = "status" style="position: sticky;">
+                        <a style="flex-grow: 0.35; text-align: left;">id</a><hr><a style="flex-grow: 1; ">status</a><hr><a style="flex-grow: 1.5; ">product</a><hr>
+                </div>
+                <div id="tasks" class="main-column-container" style="min-width: 100%; min-height:100%;max-width: 100%; max-height:100%"></div>
+        </div>
+    </div>
+    
+
+
+</body>
+</html>

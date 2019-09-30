@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title></title>
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
+    <script>
+        var path = require('path')
+        const remote = require('electron').remote
+        window.$ = window.jQuery = require(path.join(remote.getGlobal('rootDir'),'jquery-3.4.1.min.js'));        
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <style>
+            .loader {
+              border: 16px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 16px solid #3498db;
+              width: 120px;
+              height: 120px;
+              -webkit-animation: spin 2s linear infinite; /* Safari */
+              animation: spin 2s linear infinite;
+            }
+            
+            /* Safari */
+            @-webkit-keyframes spin {
+              0% { -webkit-transform: rotate(0deg); }
+              100% { -webkit-transform: rotate(360deg); }
+            }
+            
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+            </style>
+    </head>
+    <body style="background: #484A4B">
+        <div style="color:white; font-size: 22px; text-align: center;">
+            Captcha Solver
+        </div>
+        <div id="loader" style="margin-left: 105px; margin-top: 50px;"></div>
+
+        <div id ="g-recaptcha"></div>   
+        <script>
+            $('#loader').toggleClass('loader')
+            const {ipcRenderer} = require('electron')
+            var curr = null;
+            function challenge() {
+                return new Promise(function(resolve, reject){
+                     try {
+                        grecaptcha.render("g-recaptcha", {"sitekey": "6LeWwRkUAAAAAOBsau7KpuC9AV-6J8mhw4AjC3Xz","size":"invisible", "callback":"sub"})
+                    } catch{
+                        grecaptcha.reset()
+                    }
+                    grecaptcha.execute()
+                    let int = setInterval(()=>{
+                    let captchaToken = document.getElementById('g-recaptcha-response').value;
+                        if (captchaToken != "") {
+                            resolve(captchaToken)
+                            clearInterval(int)
+                            }
+                    },10)
+                })
+            };
+
+            function sub (){
+                /*
+                let captchaToken = document.getElementById('g-recaptcha-response').value;
+                curr = null
+                console.log("SEND")
+                console.log(captchaToken)*/
+                $('#loader').toggleClass('loader')                
+            };
+
+        </script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+    </body>
+</html>

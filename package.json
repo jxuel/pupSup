@@ -1,0 +1,29 @@
+{
+  "name": "pupsup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "electron .",
+    "macpack": "cross-env NODE_ENV=production electron-builder -mac"
+  },
+  "build": {
+    "mac": {
+      "icon": "icon.icns",
+      "type": "distribution",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "electron": "^6.0.10"
+  }
+}
